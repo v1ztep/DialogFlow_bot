@@ -9,19 +9,9 @@ from telegram.ext import MessageHandler
 from telegram.ext import Updater
 
 from detect_intent import detect_intent_text
+from logs_handler import TelegramLogsHandler
 
-logger = logging.getLogger('Telegram logger')
-
-
-class TelegramLogsHandler(logging.Handler):
-    def __init__(self, bot, tg_chat_id):
-        super().__init__()
-        self.bot = bot
-        self.tg_chat_id = tg_chat_id
-
-    def emit(self, record):
-        log_entry = self.format(record)
-        self.bot.send_message(chat_id=self.tg_chat_id, text=log_entry)
+logger = logging.getLogger('chatbots logger')
 
 
 def start(bot, update):

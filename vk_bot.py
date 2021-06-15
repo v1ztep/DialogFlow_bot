@@ -9,19 +9,9 @@ from vk_api.longpoll import VkEventType
 from vk_api.longpoll import VkLongPoll
 
 from detect_intent import detect_intent_text
+from logs_handler import TelegramLogsHandler
 
-logger = logging.getLogger('VK logger')
-
-
-class TelegramLogsHandler(logging.Handler):
-    def __init__(self, bot, tg_chat_id):
-        super().__init__()
-        self.bot = bot
-        self.tg_chat_id = tg_chat_id
-
-    def emit(self, record):
-        log_entry = self.format(record)
-        self.bot.send_message(chat_id=self.tg_chat_id, text=log_entry)
+logger = logging.getLogger('chatbots logger')
 
 
 def reply(event, vk_api):
@@ -48,7 +38,6 @@ def main():
     logger.setLevel(logging.INFO)
     logger.addHandler(TelegramLogsHandler(tg_bot, tg_chat_id))
     logger.info('ВК бот запущен')
-
 
     vk_session = vk.VkApi(token=vk_token)
     vk_api = vk_session.get_api()
