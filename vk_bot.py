@@ -1,11 +1,11 @@
 import logging
 import os
 import random
-from time import sleep
 
 import telegram
 import vk_api as vk
 from dotenv import load_dotenv
+from google.cloud import dialogflow
 from vk_api.longpoll import VkEventType
 from vk_api.longpoll import VkLongPoll
 
@@ -23,10 +23,28 @@ class TelegramLogsHandler(logging.Handler):
         self.bot.send_message(chat_id=self.tg_chat_id, text=log_entry)
 
 
-def echo(event, vk_api):
+def detect_intent_text(project_id, session_id, text, language_code):
+    session_client = dialogflow.SessionsClient()
+    session = session_client.session_path(project_id, session_id)
+
+    text_input = dialogflow.TextInput(text=text, language_code=language_code)
+    query_input = dialogflow.QueryInput(text=text_input)
+    response = session_client.detect_intent(
+        request={'session': session, 'query_input': query_input}
+    )
+    return response.query_result
+
+
+def reply(event, vk_api):
+    project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
+    session_id = event.user_id
+    text = event.text
+    language_code = 'ru-RU'
+
+    intent = detect_intent_text(project_id, session_id, text, language_code)
     vk_api.messages.send(
         user_id=event.user_id,
-        message=event.text,
+        message=intent.fulfillment_text,
         random_id=random.randint(1,1000)
     )
 
@@ -49,10 +67,9 @@ def main():
         longpoll = VkLongPoll(vk_session)
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-                echo(event, vk_api)
+                reply(event, vk_api)
     except Exception:
         logger.exception(msg='VK Бот упал с ошибкой:')
-        sleep(30)
 
 
 if __name__ == '__main__':
