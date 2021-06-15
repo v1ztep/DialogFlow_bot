@@ -30,7 +30,7 @@ def detect_intent_text(project_id, session_id, text, language_code):
     text_input = dialogflow.TextInput(text=text, language_code=language_code)
     query_input = dialogflow.QueryInput(text=text_input)
     response = session_client.detect_intent(
-        request={"session": session, "query_input": query_input}
+        request={'session': session, 'query_input': query_input}
     )
     return response.query_result
 
@@ -42,8 +42,8 @@ def start(bot, update):
 def reply(bot, update):
     project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
     session_id = update.message.chat.id
-    language_code = 'ru-RU'
     text = update.message.text
+    language_code = 'ru-RU'
 
     intent = detect_intent_text(project_id, session_id, text, language_code)
     update.message.reply_text(intent.fulfillment_text)
@@ -64,7 +64,7 @@ def main():
 
     updater = Updater(tg_token)
     dp = updater.dispatcher
-    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler('start', start))
     dp.add_handler(MessageHandler(Filters.text, reply))
     dp.add_error_handler(error)
     updater.start_polling()
