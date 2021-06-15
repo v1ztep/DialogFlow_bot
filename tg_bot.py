@@ -30,7 +30,7 @@ def start(bot, update):
 
 def reply(bot, update):
     project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
-    session_id = update.message.chat.id
+    session_id = f'tg{update.message.chat.id}'
     text = update.message.text
     language_code = 'ru-RU'
 
@@ -49,7 +49,7 @@ def main():
     tg_bot = telegram.Bot(token=tg_token)
     logger.setLevel(logging.INFO)
     logger.addHandler(TelegramLogsHandler(tg_bot, tg_chat_id))
-    logger.info('Бот запущен')
+    logger.info('ТГ бот запущен')
 
     updater = Updater(tg_token)
     dp = updater.dispatcher

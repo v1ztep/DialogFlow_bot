@@ -26,7 +26,7 @@ class TelegramLogsHandler(logging.Handler):
 
 def reply(event, vk_api):
     project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
-    session_id = event.user_id
+    session_id = f'vk{event.user_id}'
     text = event.text
     language_code = 'ru-RU'
 
@@ -47,7 +47,7 @@ def main():
     tg_bot = telegram.Bot(token=tg_token)
     logger.setLevel(logging.INFO)
     logger.addHandler(TelegramLogsHandler(tg_bot, tg_chat_id))
-    logger.info('Бот запущен')
+    logger.info('ВК бот запущен')
 
 
     vk_session = vk.VkApi(token=vk_token)
