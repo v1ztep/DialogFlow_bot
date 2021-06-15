@@ -3,11 +3,12 @@ import os
 
 import telegram
 from dotenv import load_dotenv
-from google.cloud import dialogflow
 from telegram.ext import CommandHandler
 from telegram.ext import Filters
 from telegram.ext import MessageHandler
 from telegram.ext import Updater
+
+from detect_intent import detect_intent_text
 
 logger = logging.getLogger('Telegram logger')
 
@@ -21,18 +22,6 @@ class TelegramLogsHandler(logging.Handler):
     def emit(self, record):
         log_entry = self.format(record)
         self.bot.send_message(chat_id=self.tg_chat_id, text=log_entry)
-
-
-def detect_intent_text(project_id, session_id, text, language_code):
-    session_client = dialogflow.SessionsClient()
-    session = session_client.session_path(project_id, session_id)
-
-    text_input = dialogflow.TextInput(text=text, language_code=language_code)
-    query_input = dialogflow.QueryInput(text=text_input)
-    response = session_client.detect_intent(
-        request={'session': session, 'query_input': query_input}
-    )
-    return response.query_result
 
 
 def start(bot, update):
