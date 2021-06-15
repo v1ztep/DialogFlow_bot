@@ -1,3 +1,4 @@
 python-telegram-bot==11.1.0
 python-dotenv==0.17.0
 google-cloud-dialogflow==2.4.0
+vk_api==11.9.4
