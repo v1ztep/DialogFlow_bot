@@ -16,7 +16,7 @@
 * Создайте [JSON-ключ](https://cloud.google.com/docs/authentication/getting-started#creating_a_service_account).
 
 
- * Создать бота в Telegram через специального бота: 
+* Создать бота в Telegram через специального бота: 
 [@BotFather](https://telegram.me/BotFather), забрать API ключ и написать 
 созданному боту.
 * Забрать свой `chat_id` через [@userinfobot](https://telegram.me/userinfobot) - 
