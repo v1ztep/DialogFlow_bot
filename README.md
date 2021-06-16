@@ -5,6 +5,8 @@
 
 ![gif](media/TG_VK_bots.gif)
 
+[Наглядная демонстрация с возможностью самому написать ботам](#демонстрация)
+
 ## Настройки
 
 * Необходимо зарегистрироваться в [Google Cloud](https://cloud.google.com).
@@ -16,7 +18,7 @@
 * Создайте [JSON-ключ](https://cloud.google.com/docs/authentication/getting-started#creating_a_service_account).
 
 
-* Создать бота в Telegram через специального бота: 
+* Создать бота в Telegram через специального бота:
 [@BotFather](https://telegram.me/BotFather), забрать API ключ и написать 
 созданному боту.
 * Забрать свой `chat_id` через [@userinfobot](https://telegram.me/userinfobot) - 
