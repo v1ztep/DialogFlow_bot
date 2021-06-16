@@ -12,7 +12,7 @@
   и забрать ваш идентификатор проекта(project_id).
 * [Создать агента DialogFlow](https://cloud.google.com/dialogflow/es/docs/quick/build-agent#create-an-agent).
 * Натренируйте DialogFlow создав intent вручную, либо можете воспользоваться 
-  скриптом `сreate_intent.py`(описание ниже).
+  скриптом `сreate_intent.py`([описание ниже](#обучение-dialogflow-через-api)).
 * Создайте [JSON-ключ](https://cloud.google.com/docs/authentication/getting-started#creating_a_service_account).
 
 
