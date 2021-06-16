@@ -100,5 +100,7 @@ python vk_bot.py
     ...
 }
 ```
-    
-
+- Запустите скрипт командой:
+```
+python сreate_intent.py
+```
