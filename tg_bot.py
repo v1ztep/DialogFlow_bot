@@ -21,10 +21,10 @@ def start(bot, update):
 
 def reply(bot, update, project_id):
     session_id = f'tg{update.message.chat.id}'
-    text = update.message.text
     language_code = 'ru-RU'
 
-    intent = detect_intent_text(project_id, session_id, text, language_code)
+    intent = detect_intent_text(project_id, session_id, update.message.text,
+                                language_code)
     update.message.reply_text(intent.fulfillment_text)
 
 
