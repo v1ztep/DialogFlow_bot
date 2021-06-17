@@ -1,5 +1,6 @@
 import logging
 import os
+from functools import partial
 
 import telegram
 from dotenv import load_dotenv
@@ -18,8 +19,7 @@ def start(bot, update):
     update.message.reply_text('Чатбот активирован!')
 
 
-def reply(bot, update):
-    project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
+def reply(bot, update, project_id):
     session_id = f'tg{update.message.chat.id}'
     text = update.message.text
     language_code = 'ru-RU'
@@ -34,6 +34,7 @@ def error(bot, update, error):
 
 def main():
     load_dotenv()
+    project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
     tg_token = os.getenv('TG_BOT_TOKEN')
     tg_chat_id = os.getenv('TG_CHAT_ID')
     tg_bot = telegram.Bot(token=tg_token)
@@ -44,7 +45,12 @@ def main():
     updater = Updater(tg_token)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler('start', start))
-    dp.add_handler(MessageHandler(Filters.text, reply))
+    dp.add_handler(
+        MessageHandler(
+            Filters.text,
+            partial(reply, project_id=project_id)
+        )
+    )
     dp.add_error_handler(error)
     updater.start_polling()
     updater.idle()
