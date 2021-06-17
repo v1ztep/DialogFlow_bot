@@ -17,10 +17,9 @@ logger = logging.getLogger('chatbots logger')
 def reply(event, vk_api):
     project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
     session_id = f'vk{event.user_id}'
-    text = event.text
     language_code = 'ru-RU'
 
-    intent = detect_intent_text(project_id, session_id, text, language_code)
+    intent = detect_intent_text(project_id, session_id, event.text, language_code)
     if not intent.intent.is_fallback:
         vk_api.messages.send(
             user_id=event.user_id,
