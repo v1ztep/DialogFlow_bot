@@ -43,7 +43,7 @@ def main():
     vk_api = vk_session.get_api()
 
     try:
-        longpoll = VkLongPoll(vk_session)
+        longpoll = VkLongPoll(vk_session, wait=60)
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
                 reply(event, vk_api)
